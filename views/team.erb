@@ -24,3 +24,17 @@
 <% else %>
 <p>There are no teams yet!</p>
 <% end %>
+
+<form action="/coordinators" method="post">
+  <label for="team_id">Select a Team</label>
+  <select id='team_id' name='team_id' type='text'>
+    <% @teams.each() do |team| %>
+      <option value="<%= team.id()%>"> <%= team.name() %> </option>
+    <% end %>
+  </select>
+
+  <label for="coordinator_name">Name of Team Coordinator</label>
+  <input id="coordinator_name" name="coordinator_name" type="text">
+
+  <button type="submit">Add Coordinator</button>
+</form>

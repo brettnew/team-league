@@ -5,6 +5,7 @@ require("sinatra/reloader")
 require("sinatra/activerecord")
 require("./lib/team")
 require("./lib/player")
+require "./lib/team_coordinator"
 also_reload("lib/**/*.rb")
 
 get('/') do
@@ -29,8 +30,10 @@ post('/teams') do
 end
 
 get('/teams/:id') do
-  @team = Team.find(params.fetch("id").to_i())
+  id = params.fetch("id").to_i()
+  @team = Team.find(id)
   @teams = Team.all()
+  @coordinator = TeamCoordinator.find_by(team_id: id)
   erb(:team_edit)
 end
 
@@ -47,4 +50,13 @@ patch('/teams/:id') do
   team.update({:name => name})
   @teams = Team.all()
   erb(:team)
+end
+
+post("/coordinators") do
+  name = params.fetch("coordinator_name")
+  team_id = params.fetch("team_id").to_i()
+  @coordinator = TeamCoordinator.create({:name => name, :team_id => team_id})
+  @team = Team.find(team_id)
+  @teams = Team.all()
+  erb(:team_edit)
 end
