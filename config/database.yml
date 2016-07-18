@@ -1,0 +1,7 @@
+development:
+  adapter: postgresql
+  database: player_tracker_development
+
+test:
+  adapter: postgresql
+  database: player_tracker_test
