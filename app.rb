@@ -60,3 +60,32 @@ post("/coordinators") do
   @teams = Team.all()
   erb(:team_edit)
 end
+
+post('/players') do
+  name = params.fetch('name')
+  @player = Player.create({:name => name, :team_id => nil, :id => nil})
+  @players = Player.all()
+  erb(:player)
+end
+
+get('/players/:id') do
+  id = params.fetch("id").to_i()
+  @player = Player.find(id)
+  @players = Player.all()
+  erb(:player_edit)
+end
+
+delete('/players/:id') do
+  player = Player.find(params.fetch("id").to_i())
+  player.destroy()
+  @players = Player.all()
+  erb(:player)
+end
+
+patch('/players/:id') do
+  player = Player.find(params.fetch("id").to_i())
+  name = params.fetch("name")
+  player.update({:name => name})
+  @players = Player.all()
+  erb(:player)
+end

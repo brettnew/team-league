@@ -1,0 +1,25 @@
+<h1>Players</h1>
+
+<p>Create a new player:</p>
+
+<form action="/players" method="post">
+  <label for="name">Player Name:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Add player</button>
+</form>
+
+<% if @players.any?() %>
+<p>Click on a player to update it:</p>
+
+<ul>
+  <% @players.each do |player| %>
+  <li><a href="/players/<%= player.id()%>"><%= player.name() %></a> <form action="/players/<%= player.id()%>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" name="button">Delete</button></li>
+  </form></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are no players yet!</p>
+<% end %>
