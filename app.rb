@@ -19,6 +19,7 @@ end
 
 get('/players/all') do
   @players = Player.all()
+  @teams = Team.all()
   erb(:player)
 end
 
@@ -63,8 +64,10 @@ end
 
 post('/players') do
   name = params.fetch('name')
-  @player = Player.create({:name => name, :team_id => nil, :id => nil})
+  team_id = params.fetch('team_id').to_i()
+  @player = Player.create({:name => name, :team_id => team_id, :id => nil})
   @players = Player.all()
+  @teams = Team.all()
   erb(:player)
 end
 
@@ -72,6 +75,7 @@ get('/players/:id') do
   id = params.fetch("id").to_i()
   @player = Player.find(id)
   @players = Player.all()
+  @teams = Team.all()
   erb(:player_edit)
 end
 
@@ -79,6 +83,7 @@ delete('/players/:id') do
   player = Player.find(params.fetch("id").to_i())
   player.destroy()
   @players = Player.all()
+  @teams = Team.all()
   erb(:player)
 end
 
@@ -87,5 +92,6 @@ patch('/players/:id') do
   name = params.fetch("name")
   player.update({:name => name})
   @players = Player.all()
+  @teams = Team.all()
   erb(:player)
 end

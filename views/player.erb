@@ -6,6 +6,13 @@
   <label for="name">Player Name:</label>
   <input id="name" name="name" type="text">
 
+  <label for="team_id">Select a Team</label>
+  <select id='team_id' name='team_id' type='text'>
+    <% @teams.each() do |team| %>
+      <option value="<%= team.id()%>"> <%= team.name() %> </option>
+    <% end %>
+  </select>
+
   <button type="submit">Add player</button>
 </form>
 
@@ -14,7 +21,7 @@
 
 <ul>
   <% @players.each do |player| %>
-  <li><a href="/players/<%= player.id()%>"><%= player.name() %></a> <form action="/players/<%= player.id()%>" method="post">
+  <li><a href="/players/<%= player.id()%>"><%= player.name() %></a> <p><%= player.team.name %></p> <form action="/players/<%= player.id()%>" method="post">
     <input type="hidden" name="_method" value="delete">
     <button type="submit" name="button">Delete</button></li>
   </form></li>
@@ -23,3 +30,5 @@
 <% else %>
 <p>There are no players yet!</p>
 <% end %>
+
+<a href="/">Return Home</a>
