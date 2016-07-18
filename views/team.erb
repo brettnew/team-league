@@ -1,0 +1,26 @@
+<h1>Teams</h1>
+
+<p>Create a new team:</p>
+
+<form action="/teams" method="post">
+  <label for="name">Team Name:</label>
+  <input id="name" name="name" type="text">
+
+  <button type="submit">Add team</button>
+</form>
+
+
+<% if @teams.any?() %>
+<p>Click on a team to update it:</p>
+
+<ul>
+  <% @teams.each do |team| %>
+  <li><%= team.name() %><form action="/teams/<%= team.id()%>" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <button type="submit" name="button">Delete</button></li>
+  </form></li>
+  <% end %>
+</ul>
+<% else %>
+<p>There are no teams yet!</p>
+<% end %>
