@@ -40,3 +40,11 @@ delete('/teams/:id') do
   @teams = Team.all()
   erb(:team)
 end
+
+patch('/teams/:id') do
+  team = Team.find(params.fetch("id").to_i())
+  name = params.fetch("name")
+  team.update({:name => name})
+  @teams = Team.all()
+  erb(:team)
+end
